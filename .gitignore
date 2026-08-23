@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+*.pyo
+
+*.h5
+*.hdf5
+*.h5py
+
+*.pth
+*.pt
+*.ckpt
+
+logs/
+.vscode/
+.idea/
+.env
