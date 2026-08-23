@@ -324,9 +324,7 @@ class infoVAERunner(nn.Module):
                     mean=self.mean,
                     std=self.std,
                     device=self.device)
-####################################################
-### RUNNER for beta-VAE
-####################################################
+
     
 
 ####################################################
@@ -469,7 +467,7 @@ class latentRunner(nn.Module):
     def load_pretrain_model(self,model_type='pre'):
         """
 
-        Load the pretrained model for beta VAE
+        Load the pretrained model for infoVAE
 
         Args: 
 

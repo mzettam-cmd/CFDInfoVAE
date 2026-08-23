@@ -147,9 +147,7 @@ def gaussian_noise(x, var, device):
 def printProgress(epoch, epochs, loss, loss_test, MSE, KLD, elapsed, elapsed_test, collapsed):
     print(f"Epoch: {epoch:3d}/{epochs:d}, Loss: {loss:2.4f}, Loss_test: {loss_test:2.4f}, MSE: {MSE:2.4f}, KLD: {KLD:2.4f}, collapsed: {collapsed:2d}, time train: {elapsed:2.3f}, time test: {elapsed_test:2.3f}")
 
-##############################################
-# Functions used for training beta-VAE
-################################################
+
 
 
 ##############################################

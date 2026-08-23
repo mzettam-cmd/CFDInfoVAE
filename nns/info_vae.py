@@ -92,7 +92,7 @@ class InfoVAE(nn.Module):
         """
         std = torch.exp(0.5 * logvariance)
 
-        # 🔥 IMPORTANT: normal distribution (pas uniforme)
+        # IMPORTANT: normal distribution (pas uniforme)
         epsilon = torch.randn_like(std)
 
         return mean + epsilon * std
