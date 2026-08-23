@@ -44,7 +44,7 @@ POD is used as an independent reference method, while the InfoVAE and Easy-Atten
 
 More details about the methodology, numerical experiments, and results are available in:
 
-> **Reduced-order modelling of fluid flows with the Information Maximizing Variational Autoencoder (InfoVAE)**
+> **Learning Nonlinear Reduced-Order Models of Fluid Flows with InfoVAE**
 
 Research Square preprint:
 
