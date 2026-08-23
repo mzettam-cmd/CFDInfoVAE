@@ -123,7 +123,7 @@ def decode(model, data, device):
         dataset=torch.from_numpy(data),
         batch_size=512,
         shuffle=False,
-        num_workers=10)
+        num_workers=1)
 
     rec_list = []
 
@@ -156,7 +156,7 @@ def get_Ek_stream(model, original, latent, std, device, batch_size=512):
         dataset=torch.from_numpy(latent),
         batch_size=batch_size,
         shuffle=False,
-        num_workers=10
+        num_workers=1
     )
 
     numerator = 0.0
@@ -330,7 +330,7 @@ def get_Ek_t(model, data, device):
                                              batch_size=1,
                                              shuffle=False,
                                              pin_memory=True,
-                                             num_workers=10)
+                                             num_workers=1)
     rec_list = []
     with torch.no_grad():
         for batch in dataloader:

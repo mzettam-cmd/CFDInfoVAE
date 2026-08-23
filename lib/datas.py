@@ -78,10 +78,10 @@ def get_vae_DataLoader(d_train, n_train, device, batch_size):
                                              shuffle=False, num_workers=0)
     else:
         train_dl = torch.utils.data.DataLoader(dataset=torch.from_numpy(d_train[:n_train]), batch_size=batch_size,
-                                               shuffle=True, pin_memory=True, num_workers=10,
+                                               shuffle=True, pin_memory=True, num_workers=1,
                                                persistent_workers=True)
         val_dl = torch.utils.data.DataLoader(dataset=torch.from_numpy(d_train[n_train:]), batch_size=batch_size,
-                                             shuffle=False, pin_memory=True, num_workers=10,
+                                             shuffle=False, pin_memory=True, num_workers=1,
                                              persistent_workers=True)
 
     return train_dl, val_dl
