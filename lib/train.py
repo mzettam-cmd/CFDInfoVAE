@@ -9,7 +9,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import time
 import numpy as np
-
+import os
 
 
 def compute_mmd(z, prior_z=None):

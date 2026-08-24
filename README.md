@@ -630,18 +630,20 @@ configs/
 
 The latent-space dataset required by the temporal prediction stage is generated from the trained InfoVAE model through the post-processing pipeline.
 
+
+
 ---
 
-# Citation
+## Citation
 
-If you use this code in your research, please cite:
+If you use this code in your research, please cite the associated work:
 
-**Reduced-order modelling of fluid flows with the Information Maximizing Variational Autoencoder (InfoVAE)**
+**Learning Nonlinear Reduced-Order Models of Fluid Flows with InfoVAE**
 
 ```bibtex
 @article{zettam2026infovae,
-  title={Reduced-order modelling of fluid flows with the Information Maximizing Variational Autoencoder (InfoVAE)},
-  author={Zettam, Manal},
+  title={Learning Nonlinear Reduced-Order Models of Fluid Flows with InfoVAE},
+  author={Zettam, Manal and Mouda, Mouhcine and Madiafi, Mohammed and Askour, Omar and Oujaoura, Mustapha and Ezzahar, Jamal},
   year={2026},
   doi={10.21203/rs.3.rs-10594643/v1}
 }
@@ -666,3 +668,5 @@ See the `LICENSE` file for details.
 This repository contains the computational implementation associated with the research work on reduced-order modelling of fluid flows using InfoVAE, POD, and latent-space temporal prediction.
 
 For questions, suggestions, or discussions regarding the implementation, please open an issue in the repository.
+
+
