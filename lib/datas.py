@@ -8,7 +8,7 @@ import numpy as np
 
 
 ###############################
-## beta-VAE
+## InfoVAE
 ###############################
 
 #---------------------------------------------------------------------
@@ -156,7 +156,7 @@ def make_DataLoader(X,y,batch_size,
 
     train_d , val_d = random_split(dataset,[train_size, valid_size])
     
-    train_dl = DataLoader(train_d,batch_size=batch_size,drop_last=drop_last,shuffle=True,num_workers=10,pin_memory=True,persistent_workers=True)
-    val_dl = DataLoader(val_d,batch_size=batch_size,drop_last=drop_last,shuffle=True,num_workers=10,pin_memory=True,persistent_workers=True)
+    train_dl = DataLoader(train_d,batch_size=batch_size,drop_last=drop_last,shuffle=True,num_workers=1,pin_memory=True,persistent_workers=True)
+    val_dl = DataLoader(val_d,batch_size=batch_size,drop_last=drop_last,shuffle=True,num_workers=1,pin_memory=True,persistent_workers=True)
     
     return train_dl, val_dl

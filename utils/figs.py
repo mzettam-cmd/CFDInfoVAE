@@ -302,50 +302,6 @@ def plotNLmodeField(modes, values, path):
     plt.savefig(path + 'NLfield.png', format='png', bbox_inches="tight")
 
 
-def vis_bvae(modes_file, training_file):
-    """
-    Visualisation of the beta-VAE results 
-
-    Args:   
-        modes_file      :   The file saves the post-processing results of VAE 
-
-        training_file   : The history and log of training the model
-    
-    """
-    import h5py
-    from lib.init import pathsBib
-    from pathlib import Path
-
-    path = pathsBib.fig_path + 'bVAE/'
-    Path(path).mkdir(exist_ok=True)
-
-    try:
-        plot_training(training_file)
-    except:
-        print(f'Warning: {training_file} could not be loaded')
-
-    with h5py.File(modes_file, 'r') as f:
-        print("Keys: %s" % f.keys())
-        temporalModes = f['vector'][:, :]
-        temporalModes_test = f['vector_test'][:, :]
-        modes = f['modes'][:, :]
-        order = f['order'][:]
-        Ecum = f['Ecum'][:]
-        NLvalues = f['NLvalues'][:]
-        NLmodes = f['NLmodes'][:]
-
-    # Re40 case is sampled at 1tc, Re100 case is sampled at tc/5
-    if 'Re40' in modes_file:
-        fs = 1
-    else:
-        fs = 5
-
-    plotNLmodeField(NLmodes, NLvalues, path)
-    plotCompleteModes(modes, temporalModes, modes.shape[0], fs, order, path)
-    plotTemporalSeries(temporalModes, path)
-    correlationMatrix(temporalModes, order, path)
-    plotEcum(Ecum, path)
-
 def vis_pod(POD):
     """
     Visualisaton of POD results 

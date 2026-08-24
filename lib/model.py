@@ -24,21 +24,6 @@ def get_infovae(latent_dim):
 
     return InfoVAE(latent_dim)
 
-def get_vae(latent_dim): 
-    """
-    A function to obtain the beta-VAE model
-
-    Args: 
-        latent_dim : (int) The latent-variable dimension
-    
-    Returns:
-        model      : (torch.nn.Module)The beta-VAE model
-    """
-
-    from nns.beta_vae import VAE
-
-    return VAE(latent_dim)
-
 
 
 def get_predictors(name):
