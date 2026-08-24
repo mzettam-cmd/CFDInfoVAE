@@ -485,14 +485,22 @@ class latentRunner(nn.Module):
         model_type_all = ['pre','val','final']
         assert(model_type in model_type_all), print('ERROR: No type of the model matched')
 
-        if      model_type == 'pre':    model_path = pathsBib.pretrain_path + self.filename               + self.fmat
-        elif    model_type == 'val' :   model_path = pathsBib.chekp_path    + self.filename + '_bestVal'  + self.fmat
-        elif    model_type == 'final' : model_path = pathsBib.chekp_path    + self.filename + '_final'    + self.fmat
+        if model_type == 'pre':
+            model_path = os.path.join(pathsBib.model_path, self.filename + self.fmat)
+        elif model_type == 'val':
+            model_path = os.path.join(pathsBib.chekp_path,self.filename + '_bestVal' + self.fmat)
+        else:
+            model_path = os.path.join(pathsBib.chekp_path,self.filename + '_final' + self.fmat)
         try:
-            ckpoint = torch.load(model_path, map_location= self.device)
-            
-        except:
+            print("DEBUG model_path =", model_path)
+            print("DEBUG exists =", os.path.exists(model_path))
+
+            ckpoint = torch.load(model_path, map_location=self.device)
+
+        except Exception as e:
             print("ERROR: Model NOT found!")
+            print("ERROR model_path =", model_path)
+            print("ERROR details =", e)
             exit()
         stat_dict   = ckpoint['model']
 
