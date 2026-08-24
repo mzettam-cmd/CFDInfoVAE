@@ -276,17 +276,24 @@ class infoVAERunner(nn.Module):
         assert(model_type in model_type_all)
 
         if model_type == 'pre':
-            model_path = pathsBib.pretrain_path + self.filename + self.fmat
+            model_path = os.path.join(pathsBib.pretrain_path,self.filename + self.fmat)
         elif model_type == 'val':
-            model_path = pathsBib.chekp_path + self.filename + '_bestVal' + self.fmat
+            model_path = os.path.join(pathsBib.chekp_path,self.filename + '_bestVal' + self.fmat)
         else:
-            model_path = pathsBib.chekp_path + self.filename + '_final' + self.fmat
-
+            model_path = os.path.join(pathsBib.chekp_path,self.filename + '_final' + self.fmat)
+            
         try:
+            print("DEBUG pathsBib.chekp_path =", pathsBib.chekp_path)
+            print("DEBUG self.filename =", self.filename)
+            print("DEBUG self.fmat =", self.fmat)
+            print("DEBUG model_path =", model_path)
+            print("DEBUG exists =", os.path.exists(model_path))
             ckpoint = torch.load(model_path, map_location=self.device)
-        except:
-            print("ERROR: Model NOT found!")
+        except Exception as e:
+            print(f"ERROR: Cannot load model: {model_path}")
+            print(f"ERROR DETAILS: {e}")
             exit()
+
 
         self.model.load_state_dict(ckpoint['state_dict'])
         print(f'INFO: model loaded!')
