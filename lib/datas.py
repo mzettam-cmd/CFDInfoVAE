@@ -2,13 +2,18 @@
 Functions for loading data
 
 author: @yuningw
+
+modified by 
+
+@mze 
 """
 import h5py
 import numpy as np
+import torch 
 
 
 ###############################
-## InfoVAE
+## beta-VAE
 ###############################
 
 #---------------------------------------------------------------------
@@ -72,17 +77,17 @@ def get_vae_DataLoader(d_train, n_train, device, batch_size):
     if ('cuda' in device):
         train_dl = torch.utils.data.DataLoader(dataset=torch.from_numpy(d_train[:n_train]).to(device),
                                                batch_size=batch_size,
-                                               shuffle=True, num_workers=0)
+                                               shuffle=False, num_workers=0)
         val_dl = torch.utils.data.DataLoader(dataset=torch.from_numpy(d_train[n_train:]).to(device),
                                              batch_size=batch_size,
                                              shuffle=False, num_workers=0)
     else:
         train_dl = torch.utils.data.DataLoader(dataset=torch.from_numpy(d_train[:n_train]), batch_size=batch_size,
-                                               shuffle=True, pin_memory=True, num_workers=1,
-                                               persistent_workers=True)
+                                               shuffle=False, pin_memory=True, num_workers=0)#,
+                                               #persistent_workers=True)
         val_dl = torch.utils.data.DataLoader(dataset=torch.from_numpy(d_train[n_train:]), batch_size=batch_size,
-                                             shuffle=False, pin_memory=True, num_workers=1,
-                                             persistent_workers=True)
+                                             shuffle=False, pin_memory=True, num_workers=0)#,
+                                             #persistent_workers=True)
 
     return train_dl, val_dl
 
@@ -154,9 +159,15 @@ def make_DataLoader(X,y,batch_size,
     train_size = int(train_split * len_d)
     valid_size = len_d - train_size
 
-    train_d , val_d = random_split(dataset,[train_size, valid_size])
+   
+    generator = torch.Generator()
+    generator.manual_seed(42)
+
+    train_d , val_d = torch.utils.data.random_split(dataset,[train_size, valid_size],generator=generator)
+   
+    #train_d , val_d = random_split(dataset,[train_size, valid_size])
     
-    train_dl = DataLoader(train_d,batch_size=batch_size,drop_last=drop_last,shuffle=True,num_workers=1,pin_memory=True,persistent_workers=True)
-    val_dl = DataLoader(val_d,batch_size=batch_size,drop_last=drop_last,shuffle=True,num_workers=1,pin_memory=True,persistent_workers=True)
+    train_dl = DataLoader(train_d,batch_size=batch_size,drop_last=drop_last,shuffle=True,num_workers=0,generator=generator)#,pin_memory=True,persistent_workers=True)
+    val_dl = DataLoader(val_d,batch_size=batch_size,drop_last=drop_last,shuffle=False,num_workers=0)#,pin_memory=True,persistent_workers=True)
     
     return train_dl, val_dl

@@ -4,15 +4,47 @@ Main program
 NOTE: The "run" in running mode here means we do both train and infer 
 
 @yuningw
+
+modified by 
+
+@mze
 """
 
 import      torch
 import      argparse
+import random
+import numpy as np
+import torch
 from        lib             import init, POD
 from        lib.runners     import  latentRunner,infoVAERunner
-from        utils.figs_time import vis_temporal_Prediction,vis_temporal_Prediction_InfoVAE
+from        utils.figs_time import  vis_temporal_Prediction_InfoVAE
 from        utils.figs      import  vis_pod, vis_infovae
 
+
+# ============================================================
+# Reproducibility
+# ============================================================
+seed = 42
+
+random.seed(seed)
+np.random.seed(seed)
+
+torch.manual_seed(seed)
+
+if torch.cuda.is_available():
+    torch.cuda.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = False
+
+torch.use_deterministic_algorithms(True)
+
+print(f"Random seed: {seed}")
+
+# ============================================================
+# End Reproducibility
+# ============================================================
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-nn',default="easy", type=str,   help="Choose the model for time-series prediction: easy, self OR lstm")
@@ -68,8 +100,4 @@ if __name__ == "__main__":
     #vis_pod(POD)
     vis_temporal_Prediction_InfoVAE(model_type=args.nn, predictor=lruner, vae=infvae)     
 
-      
-    #vis_bvae(init.pathsBib.res_path + "modes_" + bvae.filename + ".hdf5",
-            #init.pathsBib.log_path + bvae.filename)
-    #vis_pod(POD)
-    #vis_temporal_Prediction(model_type=args.nn, predictor=lruner, vae=bvae)
+

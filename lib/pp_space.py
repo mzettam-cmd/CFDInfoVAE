@@ -92,25 +92,6 @@ def encode(model, data, device):
     means = np.concatenate(mean_list, axis=0)
     logvars = np.concatenate(logvar_list, axis=0)
     return means, logvars
-"""
-def decode(model, data, device):
- 
-    #Decode latent vectors back to physical space.
-
-
-
-    dataset = torch.utils.data.DataLoader(dataset=torch.from_numpy(data),
-                                          batch_size=512,
-                                          shuffle=False,
-                                          num_workers=2)
-    rec_list = []
-    with torch.no_grad():
-        for batch in dataset:
-            batch = batch.to(device)
-            rec = model.decoder(batch)
-            rec_list.append(rec.cpu().numpy())
-    return np.concatenate(rec_list, axis=0)
-"""
 
 def decode(model, data, device):
 
@@ -123,7 +104,7 @@ def decode(model, data, device):
         dataset=torch.from_numpy(data),
         batch_size=512,
         shuffle=False,
-        num_workers=1)
+        num_workers=0)
 
     rec_list = []
 
@@ -156,7 +137,7 @@ def get_Ek_stream(model, original, latent, std, device, batch_size=512):
         dataset=torch.from_numpy(latent),
         batch_size=batch_size,
         shuffle=False,
-        num_workers=1
+        num_workers=0
     )
 
     numerator = 0.0
@@ -330,7 +311,7 @@ def get_Ek_t(model, data, device):
                                              batch_size=1,
                                              shuffle=False,
                                              pin_memory=True,
-                                             num_workers=1)
+                                             num_workers=0)
     rec_list = []
     with torch.no_grad():
         for batch in dataloader:

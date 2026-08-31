@@ -1,6 +1,10 @@
 """
 Runners for the VAE and temporal-dynamic prediction in latent space 
 @yuningw
+
+modified by 
+
+@mze
 """
 
 import os 

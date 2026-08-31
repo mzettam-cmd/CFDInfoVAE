@@ -1,6 +1,6 @@
 """
 The architecture for InfoVAE 
-(adapted from beta-VAE)
+(adapted from beta-VAE  by @mze)
 """
 
 import torch 
