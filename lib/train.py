@@ -234,19 +234,76 @@ def fitting(device,
     start_epoch = 0
 
     if os.path.exists("checkpoint_latest.pth"):
-        checkpoint = torch.load("checkpoint_latest.pth", map_location=device)
 
-        model.load_state_dict(checkpoint["model_state_dict"])
-        optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
+        checkpoint = torch.load(
+            "checkpoint_latest.pth",
+            map_location=device
+        )
 
-        if scheduler is not None and checkpoint["scheduler_state_dict"] is not None:
-            for sch, sch_state in zip(scheduler, checkpoint["scheduler_state_dict"]):
-                sch.load_state_dict(sch_state)
+        checkpoint_state = checkpoint["model_state_dict"]
+        model_state = model.state_dict()
 
-        history = checkpoint["history"]
-        start_epoch = checkpoint["epoch"] + 1
+        # Vérification de compatibilité des dimensions
+        compatible = True
 
-        print(f"INFO: Resume training from epoch {start_epoch}")
+        for key in model_state:
+
+            if key in checkpoint_state:
+
+                if model_state[key].shape != checkpoint_state[key].shape:
+
+                    print(
+                        f"WARNING: Dimension incompatible pour {key}: "
+                        f"checkpoint={checkpoint_state[key].shape}, "
+                        f"model={model_state[key].shape}"
+                    )
+
+                    compatible = False
+                    break
+
+        if compatible:
+
+            model.load_state_dict(checkpoint_state)
+
+            # L'optimizer peut également être incompatible si
+            # l'architecture a changé
+            try:
+                optimizer.load_state_dict(
+                    checkpoint["optimizer_state_dict"]
+                )
+            except Exception as e:
+                print(
+                    f"WARNING: Optimizer incompatible : {e}"
+                )
+                print("Optimizer réinitialisé.")
+
+            if (
+                scheduler is not None
+                and checkpoint["scheduler_state_dict"] is not None
+            ):
+                for sch, sch_state in zip(
+                    scheduler,
+                    checkpoint["scheduler_state_dict"]
+                ):
+                    sch.load_state_dict(sch_state)
+
+            history = checkpoint["history"]
+            start_epoch = checkpoint["epoch"] + 1
+
+            print(
+                f"INFO: Resume training from epoch {start_epoch}"
+            )
+
+        else:
+
+            print(
+                "WARNING: Checkpoint incompatible avec le modèle actuel."
+            )
+            print(
+                "INFO: Nouveau modèle entraîné depuis zéro."
+            )
+
+        start_epoch = 0
 
     for epoch in range(start_epoch, Epoch):
         #####

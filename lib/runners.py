@@ -165,7 +165,8 @@ class infoVAERunner(nn.Module):
         if os.path.exists(checkpoint_file):
             print(f"Loading checkpoint: {checkpoint_file}")
 
-            checkpoint = torch.load(checkpoint_file, map_location=self.device)
+            #checkpoint = torch.load(checkpoint_file, map_location=self.device)
+            checkpoint = torch.load(checkpoint_file,map_location=self.device,weights_only=False)
 
             self.model.load_state_dict(checkpoint['state_dict'])
             self.opt.load_state_dict(checkpoint['optimizer_dict'])
@@ -292,7 +293,8 @@ class infoVAERunner(nn.Module):
             print("DEBUG self.fmat =", self.fmat)
             print("DEBUG model_path =", model_path)
             print("DEBUG exists =", os.path.exists(model_path))
-            ckpoint = torch.load(model_path, map_location=self.device)
+            #ckpoint = torch.load(model_path, map_location=self.device)
+            ckpoint = torch.load(model_path,map_location=self.device,weights_only=False)
         except Exception as e:
             print(f"ERROR: Cannot load model: {model_path}")
             print(f"ERROR DETAILS: {e}")
@@ -499,7 +501,8 @@ class latentRunner(nn.Module):
             print("DEBUG model_path =", model_path)
             print("DEBUG exists =", os.path.exists(model_path))
 
-            ckpoint = torch.load(model_path, map_location=self.device)
+            #ckpoint = torch.load(model_path, map_location=self.device)
+            ckpoint = torch.load(model_path,map_location=self.device,weights_only=False)
 
         except Exception as e:
             print("ERROR: Model NOT found!")

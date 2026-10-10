@@ -25,7 +25,17 @@ from        utils.figs      import  vis_pod, vis_infovae
 # Reproducibility
 # ============================================================
 #seeds = [0, 1, 2, 3, 4, 42, 123, 2024, 2025, 999]
-seed = 42
+# 0 ==> OK
+# 42 ==> OK
+# 123 ==> OK
+# 2025 ==> OK
+# 999 ==> OK
+# 2024 ==> 0K
+# 4 ==>
+# 3 ==>
+# 2 ==>
+# 1 ==>
+seed = 2024
 
 random.seed(seed)
 np.random.seed(seed)
@@ -64,6 +74,7 @@ if __name__ == "__main__":
     datafile = init.init_env(args.re)
     print("datafile =", datafile)
     datafile ='data/Data2PlatesGap1Re40_Alpha-00_downsampled_v6.hdf5'
+    #datafile='data/Re100alpha10_newData_150000.hdf5'
     print("datafile =", datafile)
 
      ## Info-VAE

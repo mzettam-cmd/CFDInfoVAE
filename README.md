@@ -178,7 +178,7 @@ The main dependencies include:
 - Matplotlib
 - scikit-learn
 
-The exact package versions may depend on the computational environment.
+
 
 ---
 
